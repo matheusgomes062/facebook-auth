@@ -5,4 +5,4 @@ a facebook auth learning repo
 
 ![](https://imgur.com/IJ8HvoV)
 
-[Imgur](https://imgur.com/IXTPBc5)
+![](https://imgur.com/IXTPBc5)
