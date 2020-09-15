@@ -1,18 +1,19 @@
 <template>
   <div class="app">
     <div class="login-component">
-      <section class="title">
-        See source code to learn how to implement this!
-      </section>
-      <v-facebook-login
-        app-id="2903441363095044"
-        @login="onLogin"
-        @logout="onLogout"
-        @get-initial-status="getUserData"
-        @sdk-loaded="sdkLoaded"
-      ></v-facebook-login>
+      <section class="title">See source code to learn how to implement this!</section>
+      <div class="login-buttons-container">
+        <v-facebook-login
+          app-id="2903441363095044"
+          @login="onLogin"
+          @logout="onLogout"
+          @get-initial-status="getUserData"
+          @sdk-loaded="sdkLoaded"
+        ></v-facebook-login>
+        <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
+      </div>
       <section class="sub-title">
-        This is the info you give to us by logging in with facebook
+        <div>This is the info you give to us by logging in with facebook</div>
         <p>Name: {{ name }}</p>
         <p>Email: {{ email }}</p>
         <p>ID: {{ personalID }}</p>
@@ -24,11 +25,13 @@
 
 <script>
 import VFacebookLogin from "vue-facebook-login-component";
+import GoogleLogin from "vue-google-login";
 
 export default {
   name: "facebookLogin",
   components: {
     VFacebookLogin,
+    GoogleLogin
   },
   data() {
     return {
@@ -38,6 +41,16 @@ export default {
       personalID: "",
       birthday: "",
       FB: undefined,
+
+      params: {
+        client_id:
+          "154764825379-as14670lqokolq295kibs9fk3pr886o6.apps.googleusercontent.com"
+      },
+      renderParams: {
+        width: 206,
+        height: 50,
+        longtitle: false
+      }
     };
   },
   methods: {
@@ -46,7 +59,7 @@ export default {
         "/me",
         "GET",
         { fields: "id,name,email,birthday" },
-        (user) => {
+        user => {
           this.personalID = user.id;
           this.email = user.email;
           this.name = user.name;
@@ -66,11 +79,22 @@ export default {
     onLogout() {
       this.isConnected = false;
     },
-  },
+    onSuccess(googleUser) {
+      console.log(googleUser);
+
+      // This only gets the user information: id, name, imageUrl and email
+      console.log(googleUser.getBasicProfile());
+
+      this.personalID = googleUser.getBasicProfile().getId();
+      this.email = googleUser.getBasicProfile().getEmail();
+      this.name = googleUser.getBasicProfile().getName();
+      this.birthday = googleUser.getBirthdays();
+    }
+  }
 };
 </script>
 
-<style>
+<style lang="scss">
 .app {
   height: 100%;
   max-height: 100%;
@@ -96,6 +120,17 @@ export default {
   font-weight: bold;
   font-size: 1em;
   margin-top: 100px;
+  div {
+    font-family: system-ui;
+    margin-bottom: 10px;
+  }
+}
+
+.login-buttons-container {
+  display: flex;
+  flex-direction: row;
+  width: 500px;
+  justify-content: space-between;
 }
 
 .button {
