@@ -5,9 +5,8 @@ import { LoaderPlugin } from "vue-google-login";
 Vue.config.productionTip = false;
 
 Vue.use(LoaderPlugin, {
-  apiKey: "ZwBah22O3f0ux2fzSgquqJZs",
-  client_id:
-    "154764825379-as14670lqokolq295kibs9fk3pr886o6.apps.googleusercontent.com",
+  apiKey: "INSERT YOUR apiKey HERE",
+  client_id: "INSERT YOUR CLIENT_ID HERE",
   cookiepolicy: "single_host_origin",
   discoveryDocs: [
     "https://people.googleapis.com/v1/{'resourceName'=people/me; 'personFields': 'birthdays'}",

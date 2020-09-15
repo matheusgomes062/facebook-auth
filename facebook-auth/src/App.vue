@@ -4,7 +4,7 @@
       <section class="title">See source code to learn how to implement this!</section>
       <div class="login-buttons-container">
         <v-facebook-login
-          app-id="2903441363095044"
+          app-id="INSERT YOUR app-id HERE"
           @login="onLogin"
           @logout="onLogout"
           @get-initial-status="getUserData"
@@ -43,8 +43,7 @@ export default {
       FB: undefined,
 
       params: {
-        client_id:
-          "154764825379-as14670lqokolq295kibs9fk3pr886o6.apps.googleusercontent.com"
+        client_id: "INSERT YOUR CLIENT_ID HERE"
       },
       renderParams: {
         width: 206,
